@@ -60,77 +60,55 @@
 </template>
 
 <script setup>
+import {
+  checkEmail,
+  checkPassword,
+  checkRepeatPassword,
+  isValidate,
+} from "@/api/checkInput";
+
 const { ref } = require("@vue/reactivity");
 const { watch } = require("@vue/runtime-core");
 const { useStore } = require("vuex");
 
 const store = useStore();
+
 const username = ref("");
+const password = ref("");
+const repeatPassword = ref("");
+const isValid = ref(false);
 const valid = ref({
   email: false,
   password: false,
   repeatPassword: false,
 });
-const password = ref("");
-const repeatPassword = ref("");
 const emailHasError = ref(true);
 const passwordHasError = ref(true);
 const repeatPasswordHasError = ref(true);
-const isValid = ref(false);
 
-const checkEmail = () => {
-  // eslint-disable-next-line
-  const validateEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-  if (!validateEmail.test(username.value) || !username.value) {
-    valid.value.email = true;
-    emailHasError.value = true;
-  } else {
-    valid.value.email = false;
-    emailHasError.value = false;
-  }
-  isValidate();
+const handleEmail = () => {
+  const result = checkEmail(username);
+  valid.value.email = result;
+  emailHasError.value = result;
+  isValid.value = isValidate(username, password, repeatPassword);
 };
 
-const checkPassword = () => {
-  const validatePassword =
-    /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-  if (!validatePassword.test(password.value || !password.value)) {
-    valid.value.password = true;
-    passwordHasError.value = true;
-  } else {
-    valid.value.password = false;
-    passwordHasError.value = false;
-  }
-  isValidate();
+const handlePassword = () => {
+  const result = checkPassword(password);
+  valid.value.password = result;
+  passwordHasError.value = result;
+  isValid.value = isValidate(username, password, repeatPassword);
 };
 
-const checkRepeatPassword = () => {
-  if (password.value !== repeatPassword.value || !repeatPassword.value) {
-    repeatPasswordHasError.value = true;
-    valid.value.repeatPassword = true;
-  } else {
-    repeatPasswordHasError.value = false;
-    valid.value.repeatPassword = false;
-  }
-  isValidate();
-};
-
-const isValidate = () => {
-  if (
-    !emailHasError.value &&
-    !passwordHasError.value &&
-    !repeatPasswordHasError.value &&
-    username.value &&
-    password.value &&
-    repeatPassword.value
-  ) {
-    isValid.value = true;
-  } else {
-    isValid.value = false;
-  }
+const handleRepeatPassword = () => {
+  const result = checkRepeatPassword(password, repeatPassword);
+  valid.value.repeatPassword = result;
+  repeatPasswordHasError.value = result;
+  isValid.value = isValidate(username, password, repeatPassword);
 };
 
 const registerUser = () => {
+  isValid.value = isValidate(username, password, repeatPassword);
   if (isValid.value) {
     store.commit("setEmail", username.value);
     store.commit("setPassword", password.value);
@@ -141,9 +119,9 @@ const registerUser = () => {
   }
 };
 
-watch(username, checkEmail);
-watch(password, checkPassword);
-watch(repeatPassword, checkRepeatPassword);
+watch(username, handleEmail);
+watch(password, handlePassword);
+watch(repeatPassword, handleRepeatPassword);
 </script>
 
 <style>

@@ -17,4 +17,8 @@ input {
   height: 25px;
   margin-bottom: 5px;
 }
+button:disabled {
+  background-color: rgb(211, 211, 211);
+  color: white;
+}
 </style>

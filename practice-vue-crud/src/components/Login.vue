@@ -39,5 +39,8 @@
 }
 .submit_btn {
   margin-top: 20px;
+  border: none;
+  height: 30px;
+  border-radius: 5px;
 }
 </style>

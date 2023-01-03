@@ -3,7 +3,7 @@
     <form class="login_form_container" @submit.prevent>
       <div class="login_input_container">
         <label for="username" :class="{ title_danger: emailHasError }"
-          >Email</label
+          >이메일 주소 입력</label
         >
         <input
           @change="checkValidateEmail"
@@ -19,7 +19,7 @@
         </p>
 
         <label for="password" :class="{ title_danger: passwordHasError }"
-          >Password</label
+          >비밀번호 입력</label
         >
         <input
           name="password"
@@ -35,7 +35,7 @@
         <label
           for="repeat_password"
           :class="{ title_danger: repeatPasswordHasError }"
-          >Reapeat Password</label
+          >비밀번호 재입력</label
         >
         <input
           name="repeat_password"
@@ -51,7 +51,14 @@
         >
           비밀번호가 일치하지 않습니다.
         </p>
-        <button class="submit_btn" @click="registerUser">Register</button>
+        <button
+          class="submit_btn"
+          :class="{ valid_btn: isValid }"
+          @click="registerUser"
+          v-bind:disabled="!isValid"
+        >
+          회원가입
+        </button>
       </div>
     </form>
   </div>
@@ -69,10 +76,10 @@ const valid = ref({
 });
 const password = ref("");
 const repeatPassword = ref("");
-const isValidate = ref(false);
 const emailHasError = ref(true);
 const passwordHasError = ref(true);
 const repeatPasswordHasError = ref(true);
+const isValid = ref(false);
 
 const checkEmail = () => {
   // eslint-disable-next-line
@@ -84,6 +91,7 @@ const checkEmail = () => {
     valid.value.email = false;
     emailHasError.value = false;
   }
+  isValidate();
 };
 
 const checkPassword = () => {
@@ -96,6 +104,7 @@ const checkPassword = () => {
     valid.value.password = false;
     passwordHasError.value = false;
   }
+  isValidate();
 };
 
 const checkRepeatPassword = () => {
@@ -106,17 +115,26 @@ const checkRepeatPassword = () => {
     repeatPasswordHasError.value = false;
     valid.value.repeatPassword = false;
   }
+  isValidate();
 };
 
-const registerUser = () => {
+const isValidate = () => {
   if (
-    emailHasError &&
-    passwordHasError &&
-    repeatPasswordHasError &&
+    !emailHasError.value &&
+    !passwordHasError.value &&
+    !repeatPasswordHasError.value &&
     username.value &&
     password.value &&
     repeatPassword.value
   ) {
+    isValid.value = true;
+  } else {
+    isValid.value = false;
+  }
+};
+
+const registerUser = () => {
+  if (isValid.value) {
     console.log("등록 완료");
     console.log(`username: ${username.value} password: ${password.value}`);
   } else {
@@ -135,17 +153,21 @@ watch(repeatPassword, checkRepeatPassword);
   margin-bottom: 5px;
 }
 .input_safe {
-  border-bottom: 1.5px solid black;
+  border-bottom: 1px solid black;
 }
 .input_danger {
-  border-bottom: 1.5px solid red;
+  border-bottom: 1px solid red;
 }
 .input_error_msg {
-  margin: 5px;
+  margin: 5px 0 15px 0;
   color: red;
   font-size: 12px;
 }
 .display_none {
   display: none;
+}
+.valid_btn {
+  background-color: rgb(46, 137, 197);
+  color: white;
 }
 </style>

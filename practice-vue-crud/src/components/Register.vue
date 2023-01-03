@@ -77,32 +77,24 @@ const username = ref("");
 const password = ref("");
 const repeatPassword = ref("");
 const isValid = ref(false);
-const valid = ref({
-  email: false,
-  password: false,
-  repeatPassword: false,
-});
 const emailHasError = ref(true);
 const passwordHasError = ref(true);
 const repeatPasswordHasError = ref(true);
 
 const handleEmail = () => {
   const result = checkEmail(username);
-  valid.value.email = result;
   emailHasError.value = result;
   isValid.value = isValidate(username, password, repeatPassword);
 };
 
 const handlePassword = () => {
   const result = checkPassword(password);
-  valid.value.password = result;
   passwordHasError.value = result;
   isValid.value = isValidate(username, password, repeatPassword);
 };
 
 const handleRepeatPassword = () => {
   const result = checkRepeatPassword(password, repeatPassword);
-  valid.value.repeatPassword = result;
   repeatPasswordHasError.value = result;
   isValid.value = isValidate(username, password, repeatPassword);
 };

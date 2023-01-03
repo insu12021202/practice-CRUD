@@ -118,6 +118,7 @@ watch(repeatPassword, handleRepeatPassword);
 
 <style>
 .title_danger {
+  font-weight: 600;
   color: red;
   margin-bottom: 5px;
 }
@@ -128,7 +129,7 @@ watch(repeatPassword, handleRepeatPassword);
   border-bottom: 1px solid red;
 }
 .input_error_msg {
-  margin: 5px 0 15px 0;
+  margin: 5px 0 20px 0;
   color: red;
   font-size: 12px;
 }

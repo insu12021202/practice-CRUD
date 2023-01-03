@@ -67,6 +67,7 @@
 <script setup>
 const { ref } = require("@vue/reactivity");
 const { watch } = require("@vue/runtime-core");
+const { useStore } = require("vuex");
 
 const username = ref("");
 const valid = ref({
@@ -80,6 +81,8 @@ const emailHasError = ref(true);
 const passwordHasError = ref(true);
 const repeatPasswordHasError = ref(true);
 const isValid = ref(false);
+
+const store = useStore();
 
 const checkEmail = () => {
   // eslint-disable-next-line
@@ -135,6 +138,8 @@ const isValidate = () => {
 
 const registerUser = () => {
   if (isValid.value) {
+    store.commit("setEmail", username.value);
+    store.commit("setPassword", password.value);
     console.log("등록 완료");
     console.log(`username: ${username.value} password: ${password.value}`);
   } else {

@@ -7,10 +7,11 @@
 <script setup>
 import { computed, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
-import HeaderVue from "./Header.vue";
+
+const store = useStore();
 const email = ref("");
 const password = ref("");
-const store = useStore();
+
 const checkID = () => {
   const email = computed(() => store.state.email);
   const password = computed(() => store.state.password);

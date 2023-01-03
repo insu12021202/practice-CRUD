@@ -51,12 +51,7 @@
         >
           비밀번호가 일치하지 않습니다.
         </p>
-        <button
-          class="submit_btn"
-          :class="{ valid_btn: isValid }"
-          @click="registerUser"
-          v-bind:disabled="!isValid"
-        >
+        <button class="valid_btn" @click="registerUser" :disabled="!isValid">
           회원가입
         </button>
       </div>
@@ -69,6 +64,7 @@ const { ref } = require("@vue/reactivity");
 const { watch } = require("@vue/runtime-core");
 const { useStore } = require("vuex");
 
+const store = useStore();
 const username = ref("");
 const valid = ref({
   email: false,
@@ -81,8 +77,6 @@ const emailHasError = ref(true);
 const passwordHasError = ref(true);
 const repeatPasswordHasError = ref(true);
 const isValid = ref(false);
-
-const store = useStore();
 
 const checkEmail = () => {
   // eslint-disable-next-line
@@ -170,9 +164,5 @@ watch(repeatPassword, checkRepeatPassword);
 }
 .display_none {
   display: none;
-}
-.valid_btn {
-  background-color: rgb(46, 137, 197);
-  color: white;
 }
 </style>

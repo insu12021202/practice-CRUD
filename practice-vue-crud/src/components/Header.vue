@@ -26,6 +26,7 @@ import { nav_user, nav_not_logined } from "@/const/nav_menu";
 import router from "@/router";
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
+
 const authState = ref(0);
 onMounted(() => {
   authState.value = localStorage.getItem("authState");
@@ -35,7 +36,7 @@ onMounted(() => {
 const logout = () => {
   localStorage.removeItem("authState");
   window.alert("로그아웃 되었습니다.");
-  authState.value = "0";
+  window.location.assign("/");
 };
 </script>
 
@@ -51,6 +52,7 @@ const logout = () => {
 .nav_item {
   margin-right: 10px;
   margin-left: 10px;
+  cursor: pointer;
 }
 a {
   text-decoration: none;

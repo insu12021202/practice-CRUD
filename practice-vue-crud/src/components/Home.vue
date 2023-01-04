@@ -1,9 +1,8 @@
 <template>
   <div class="body_background">
     <div class="home_container">
-      <h1 v-if="authState === 1">{{ nickname }}님 환영합니다.</h1>
-      <h1 v-if="authState === 0">로그인이 필요합니다.</h1>
-      <button @click="checkID">아이디 확인</button>
+      <h1 v-if="authState === '1'">{{ nickname }}님 환영합니다.</h1>
+      <h1 v-else>로그인이 필요합니다.</h1>
     </div>
   </div>
 </template>
@@ -16,15 +15,10 @@ const authState = ref("");
 
 onMounted(() => {
   nickname.value = computed(() => store.state.nickname);
+  authState.value = localStorage.getItem("authState");
 });
 
 const store = useStore();
-
-const checkID = () => {
-  const email = computed(() => store.state.email);
-  const password = computed(() => store.state.password);
-  console.log(email.value, password.value);
-};
 </script>
 
 <style>

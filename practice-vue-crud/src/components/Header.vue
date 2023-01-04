@@ -48,6 +48,7 @@ const logout = () => {
   width: 100%;
   height: 50px;
   background-color: antiquewhite;
+  z-index: 1;
 }
 .nav_item {
   margin-right: 10px;

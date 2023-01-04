@@ -9,10 +9,17 @@
       <th>No</th>
       <th>제목</th>
       <th>작성자</th>
+
       <tr v-for="item in data" v-bind:key="item">
-        <td>{{ item.id }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.userId }}</td>
+        <td>
+          <router-link :to="`/board/${item.id}`">{{ item.id }}</router-link>
+        </td>
+        <td>
+          <router-link :to="`/board/${item.id}`">{{ item.title }}</router-link>
+        </td>
+        <td>
+          <router-link :to="`/board/${item.id}`">{{ item.userId }}</router-link>
+        </td>
       </tr>
     </table>
   </div>

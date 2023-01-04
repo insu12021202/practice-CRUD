@@ -152,7 +152,6 @@ const registerUser = () => {
 watch(username, handleEmail);
 watch(password, handlePassword);
 watch(repeatPassword, handleRepeatPassword);
-// watch(nickname, checkNicknameIsNotEmpty(nickname));
 watchEffect(nickname, checkNicknameIsNotEmpty(nickname));
 </script>
 

@@ -22,13 +22,6 @@ const store = useStore();
 </script>
 
 <style>
-.body_background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
 .home_container {
   display: flex;
   justify-content: center;

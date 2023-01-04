@@ -59,7 +59,10 @@ const checkValid = () => {
   }
 };
 
-watch([username, password], checkValid);
+watch([username, password], checkValid, {
+  immediate: true, // 초기 렌더링 시점 호출 여부 설정
+  deep: true, // 중첩 데이터 감시 여부 설정
+});
 </script>
 
 <style>

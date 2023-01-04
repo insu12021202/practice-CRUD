@@ -41,19 +41,33 @@ const logout = () => {
 
 <style>
 .nav {
+  background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 50px;
-  background-color: antiquewhite;
   z-index: 1;
 }
 .nav_item {
+  box-shadow: inset 0 0 0 0 white;
+  width: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
   font-weight: 600;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 15px;
+  margin-left: 15px;
   cursor: pointer;
+  color: white;
+  z-index: 1;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.nav_item:hover {
+  background-color: black;
+  color: black;
+  box-shadow: inset 0 100px 0 0 white;
 }
 a {
   text-decoration: none;

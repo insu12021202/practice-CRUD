@@ -81,9 +81,9 @@ watch([username, password], checkValid, {
 .valid_btn {
   margin-top: 20px;
   border: none;
-  height: 30px;
+  height: 35px;
   border-radius: 5px;
-  background-color: rgb(46, 137, 197);
+  background-color: black;
   color: white;
   cursor: pointer;
 }

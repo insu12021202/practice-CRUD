@@ -2,7 +2,10 @@
   <div class="body_background">
     <form class="login_form_container" @submit.prevent>
       <div class="login_input_container">
-        <label for="username" :class="{ title_danger: emailHasError }"
+        <label
+          for="username"
+          class="title_safe"
+          :class="{ title_danger: emailHasError }"
           >이메일 주소 입력</label
         >
         <input
@@ -156,21 +159,26 @@ watchEffect(nickname, checkNicknameIsNotEmpty(nickname));
 </script>
 
 <style>
+.title_safe {
+  font-weight: 600;
+  margin: 10px 0 5px 0;
+}
 .title_danger {
   font-weight: 600;
-  color: red;
+  color: rgb(231, 33, 33);
   margin: 10px 0 5px 0;
 }
 .input_safe {
+  font-weight: 600;
   border-bottom: 1px solid black;
   margin-bottom: 10px;
 }
 .input_danger {
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid rgb(231, 33, 33);
 }
 .input_error_msg {
   margin: 5px 0 5px 0;
-  color: red;
+  color: rgb(231, 33, 33);
   font-size: 12px;
 }
 .display_none {
@@ -184,7 +192,7 @@ watchEffect(nickname, checkNicknameIsNotEmpty(nickname));
   width: 70px;
   margin-bottom: 15px;
   border: none;
-  background-color: rgb(62, 89, 148);
+  background-color: black;
   color: white;
   margin-top: 5px;
 }

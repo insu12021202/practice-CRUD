@@ -7,7 +7,8 @@
     >
       TOP
     </button>
-    <table class="board_table">
+    <RotateLoader v-if="!data" :color="loadingColor"></RotateLoader>
+    <table v-else class="board_table">
       <colgroup>
         <col width="10%" />
         <col width="65%" />
@@ -33,10 +34,12 @@
 </template>
 
 <script setup>
+import RotateLoader from "vue-spinner/src/RotateLoader.vue";
 const { onMounted, ref } = require("@vue/runtime-core");
 const { default: axios } = require("axios");
 const data = ref();
 const isActive = ref(false);
+const loadingColor = "#000000";
 const fetchBoardAllData = () => {
   axios.get("https://jsonplaceholder.typicode.com/posts").then((res) => {
     data.value = res.data;
@@ -79,7 +82,7 @@ const scroll_top = () => {
   border: none;
   padding: 10px;
   border-radius: 15px;
-  background-color: rgb(46, 137, 197);
+  background-color: black;
   cursor: pointer;
   color: white;
 }

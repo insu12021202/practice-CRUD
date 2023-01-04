@@ -30,7 +30,6 @@ import { onMounted } from "@vue/runtime-core";
 const authState = ref(0);
 onMounted(() => {
   authState.value = localStorage.getItem("authState");
-  console.log(authState.value);
 });
 
 const logout = () => {

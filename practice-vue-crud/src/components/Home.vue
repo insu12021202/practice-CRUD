@@ -27,7 +27,7 @@ const store = useStore();
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 600px;
+  height: 100%;
 }
 .home_container {
   display: flex;

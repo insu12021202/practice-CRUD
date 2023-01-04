@@ -1,16 +1,20 @@
 <template>
   <div class="body_background">
+    <h1>{{ nickname }}님 환영합니다.</h1>
     <button @click="checkID">아이디 확인</button>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from "@vue/runtime-core";
+import { computed, onMounted, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
+const nickname = ref("");
+
+onMounted(() => {
+  nickname.value = computed(() => store.state.nickname);
+});
 
 const store = useStore();
-const email = ref("");
-const password = ref("");
 
 const checkID = () => {
   const email = computed(() => store.state.email);

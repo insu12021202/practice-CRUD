@@ -4,11 +4,15 @@ import createPersistedState from "vuex-persistedstate";
 const store = createStore({
   state: {
     email: "",
+    nickname: "",
     password: "",
   },
   mutations: {
     setEmail(state, email) {
       state.email = email;
+    },
+    setNickname(state, nickname) {
+      state.nickname = nickname;
     },
     setPassword(state, password) {
       state.password = password;
@@ -16,7 +20,7 @@ const store = createStore({
   },
   plugins: [
     createPersistedState({
-      paths: ["email", "password"],
+      paths: ["email", "password", "nickname"],
     }),
   ],
 });

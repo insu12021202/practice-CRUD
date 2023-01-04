@@ -6,7 +6,6 @@
           >이메일 주소 입력</label
         >
         <input
-          @change="checkValidateEmail"
           name="username"
           type="text"
           v-model="username"
@@ -17,6 +16,29 @@
         <p class="input_error_msg" :class="{ display_none: !emailHasError }">
           이메일 주소를 정확히 입력해주세요.
         </p>
+
+        <label
+          for="nickname"
+          :class="{ title_danger: nicknameHasError || !nickname }"
+          >닉네임 입력</label
+        >
+        <input
+          name="nickname"
+          type="text"
+          v-model="nickname"
+          placeholder="nickname"
+          class="input_safe"
+          :class="{ input_danger: nicknameHasError || !nickname }"
+        />
+        <p class="input_error_msg" :class="{ display_none: nickname }">
+          닉네임을 입력해주세요.
+        </p>
+        <p class="input_error_msg" :class="{ display_none: !nicknameHasError }">
+          닉네임 중복 확인이 필요합니다.
+        </p>
+        <button class="check_nick_dup_btn" @click="handleNickname">
+          중복 체크
+        </button>
 
         <label for="password" :class="{ title_danger: passwordHasError }"
           >비밀번호 입력</label
@@ -62,50 +84,66 @@
 <script setup>
 import {
   checkEmail,
+  checkNickDup,
+  checkNicknameIsNotEmpty,
   checkPassword,
   checkRepeatPassword,
   isValidate,
 } from "@/api/checkInput";
+import router from "@/router";
 
 const { ref } = require("@vue/reactivity");
-const { watch } = require("@vue/runtime-core");
+const { watch, watchEffect } = require("@vue/runtime-core");
 const { useStore } = require("vuex");
 
 const store = useStore();
 
 const username = ref("");
+const nickname = ref("");
 const password = ref("");
 const repeatPassword = ref("");
 const isValid = ref(false);
 const emailHasError = ref(true);
+const nicknameHasError = ref(true);
 const passwordHasError = ref(true);
 const repeatPasswordHasError = ref(true);
 
 const handleEmail = () => {
   const result = checkEmail(username);
   emailHasError.value = result;
-  isValid.value = isValidate(username, password, repeatPassword);
+  isValid.value = isValidate(username, nickname, password, repeatPassword);
 };
 
 const handlePassword = () => {
   const result = checkPassword(password);
   passwordHasError.value = result;
-  isValid.value = isValidate(username, password, repeatPassword);
+  isValid.value = isValidate(username, nickname, password, repeatPassword);
 };
 
 const handleRepeatPassword = () => {
   const result = checkRepeatPassword(password, repeatPassword);
   repeatPasswordHasError.value = result;
-  isValid.value = isValidate(username, password, repeatPassword);
+  isValid.value = isValidate(username, nickname, password, repeatPassword);
+};
+
+const handleNickname = () => {
+  const result = checkNickDup(nickname); //중복되지 않으면 false 반환
+  nicknameHasError.value = result;
+  isValid.value = isValidate(username, nickname, password, repeatPassword);
+  console.log("is", isValid.value);
+  console.log("error", nicknameHasError.value);
 };
 
 const registerUser = () => {
-  isValid.value = isValidate(username, password, repeatPassword);
+  isValid.value = isValidate(username, nickname, password, repeatPassword);
   if (isValid.value) {
     store.commit("setEmail", username.value);
+    store.commit("setNickname", nickname.value);
     store.commit("setPassword", password.value);
-    console.log("등록 완료");
-    console.log(`username: ${username.value} password: ${password.value}`);
+    localStorage.setItem(nickname.value, true);
+
+    window.alert("정상적으로 회원가입 되었습니다.");
+    router.push("/login");
   } else {
     window.alert("입력 정보를 다시 확인해주세요.");
   }
@@ -114,26 +152,41 @@ const registerUser = () => {
 watch(username, handleEmail);
 watch(password, handlePassword);
 watch(repeatPassword, handleRepeatPassword);
+// watch(nickname, checkNicknameIsNotEmpty(nickname));
+watchEffect(nickname, checkNicknameIsNotEmpty(nickname));
 </script>
 
 <style>
 .title_danger {
   font-weight: 600;
   color: red;
-  margin-bottom: 5px;
+  margin: 10px 0 5px 0;
 }
 .input_safe {
   border-bottom: 1px solid black;
+  margin-bottom: 10px;
 }
 .input_danger {
   border-bottom: 1px solid red;
 }
 .input_error_msg {
-  margin: 5px 0 20px 0;
+  margin: 5px 0 5px 0;
   color: red;
   font-size: 12px;
 }
 .display_none {
   display: none;
+}
+.check_nick_dup_btn {
+  cursor: pointer;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: 70px;
+  margin-bottom: 15px;
+  border: none;
+  background-color: rgb(62, 89, 148);
+  color: white;
+  margin-top: 5px;
 }
 </style>

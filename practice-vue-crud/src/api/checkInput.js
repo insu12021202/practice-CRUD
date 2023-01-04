@@ -3,6 +3,7 @@ import { ref } from "vue";
 const emailHasError = ref(true);
 const passwordHasError = ref(true);
 const repeatPasswordHasError = ref(true);
+const nicknameHasError = ref(true);
 
 const checkEmail = (username) => {
   // eslint-disable-next-line
@@ -13,6 +14,26 @@ const checkEmail = (username) => {
   } else {
     emailHasError.value = false;
     return false;
+  }
+};
+
+const checkNickDup = (nickname) => {
+  const originNickname = localStorage.getItem(nickname.value);
+  console.log(originNickname, nickname.value);
+  if (originNickname !== "true" && nickname.value) {
+    //중복되지 않고 닉네임이 있으면 false 반환
+    nicknameHasError.value = false;
+    return false;
+  } else {
+    //그렇지 않으면 true 반환
+    nicknameHasError.value = true;
+    return true;
+  }
+};
+
+const checkNicknameIsNotEmpty = (nickname) => {
+  if (!nickname.value) {
+    return;
   }
 };
 
@@ -38,12 +59,14 @@ const checkRepeatPassword = (password, repeatPassword) => {
   }
 };
 
-const isValidate = (username, password, repeatPassword) => {
+const isValidate = (username, nickname, password, repeatPassword) => {
   if (
     !emailHasError.value &&
     !passwordHasError.value &&
     !repeatPasswordHasError.value &&
+    !nicknameHasError.value &&
     username.value &&
+    nickname.value &&
     password.value &&
     repeatPassword.value
   ) {
@@ -53,4 +76,11 @@ const isValidate = (username, password, repeatPassword) => {
   }
 };
 
-export { checkEmail, checkPassword, checkRepeatPassword, isValidate };
+export {
+  checkEmail,
+  checkNickDup,
+  checkNicknameIsNotEmpty,
+  checkPassword,
+  checkRepeatPassword,
+  isValidate,
+};

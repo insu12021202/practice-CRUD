@@ -2,7 +2,7 @@
   <div class="body_background">
     <form class="login_form_container" @submit.prevent>
       <div class="login_input_container">
-        <label for="username">Email</label>
+        <label for="username" class="input_label">Email</label>
         <input
           class="input_safe"
           name="username"
@@ -10,7 +10,7 @@
           v-model="username"
           placeholder="E-mail"
         />
-        <label for="password">Password</label>
+        <label for="password" class="input_label">Password</label>
         <input
           class="input_safe"
           name="password"
@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import router from "@/router";
 import { computed, ref, watch } from "@vue/runtime-core";
 import { useStore } from "vuex";
 
@@ -42,6 +43,7 @@ const checkInfo = () => {
   if (username.value === userEmail.value) {
     if (password.value === userPassword.value) {
       window.alert("로그인 성공");
+      router.push("/");
     } else {
       window.alert("비밀번호를 다시 확인하세요.");
     }
@@ -79,5 +81,10 @@ watch([username, password], checkValid);
   border-radius: 5px;
   background-color: rgb(46, 137, 197);
   color: white;
+  cursor: pointer;
+}
+.input_label {
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 </style>

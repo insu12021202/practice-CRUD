@@ -43,7 +43,8 @@ const checkInfo = () => {
   if (username.value === userEmail.value) {
     if (password.value === userPassword.value) {
       window.alert("로그인 성공");
-      router.push("/");
+      localStorage.setItem("authState", 1);
+      window.location.assign("/");
     } else {
       window.alert("비밀번호를 다시 확인하세요.");
     }

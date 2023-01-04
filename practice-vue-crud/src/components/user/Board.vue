@@ -5,7 +5,7 @@
       :class="{ display_none: !isActive }"
       @click="scroll_top"
     >
-      위로 가기
+      TOP
     </button>
     <table class="board_table">
       <colgroup>
@@ -18,7 +18,7 @@
       <th>작성자</th>
 
       <tr v-for="item in data" v-bind:key="item">
-        <td>
+        <td class="board_num">
           <router-link :to="`/board/${item.id}`">{{ item.id }}</router-link>
         </td>
         <td>
@@ -76,8 +76,17 @@ const scroll_top = () => {
   position: fixed;
   bottom: 50px;
   right: 20px;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: rgb(46, 137, 197);
+  cursor: pointer;
+  color: white;
 }
 .display_none {
   display: none;
+}
+.board_num {
+  font-weight: 600;
 }
 </style>

@@ -50,6 +50,7 @@ const logout = () => {
   z-index: 1;
 }
 .nav_item {
+  font-weight: 600;
   margin-right: 10px;
   margin-left: 10px;
   cursor: pointer;

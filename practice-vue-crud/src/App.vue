@@ -31,6 +31,10 @@ label {
   margin-bottom: 5px;
   font-weight: 600;
 }
+button {
+  border: none;
+  cursor: pointer;
+}
 button:disabled {
   background-color: rgb(211, 211, 211);
   color: white;

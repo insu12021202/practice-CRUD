@@ -30,6 +30,7 @@
           type="text"
           v-model="nickname"
           placeholder="nickname"
+          @keypress="preventEnterKey"
           class="input_safe"
           :class="{ input_danger: nicknameHasError || !nickname }"
         />
@@ -92,15 +93,12 @@ import {
   checkPassword,
   checkRepeatPassword,
   isValidate,
-} from "@/api/checkInput";
+} from "@/composables/checkInput";
 import router from "@/router";
-
-const { ref } = require("@vue/reactivity");
-const { watch, watchEffect } = require("@vue/runtime-core");
-const { useStore } = require("vuex");
+import { ref, watch, watchEffect } from "vue";
+import { useStore } from "vuex";
 
 const store = useStore();
-
 const username = ref("");
 const nickname = ref("");
 const password = ref("");
@@ -110,6 +108,12 @@ const emailHasError = ref(true);
 const nicknameHasError = ref(true);
 const passwordHasError = ref(true);
 const repeatPasswordHasError = ref(true);
+
+const preventEnterKey = (e) => {
+  if (e.keyCode == "13") {
+    e.preventDefault();
+  }
+};
 
 const handleEmail = () => {
   const result = checkEmail(username);
@@ -131,10 +135,13 @@ const handleRepeatPassword = () => {
 
 const handleNickname = () => {
   const result = checkNickDup(nickname); //중복되지 않으면 false 반환
+  if (result === false) {
+    window.alert("닉네임 사용 가능합니다.");
+  } else {
+    window.alert("중복되는 닉네임입니다.");
+  }
   nicknameHasError.value = result;
   isValid.value = isValidate(username, nickname, password, repeatPassword);
-  console.log("is", isValid.value);
-  console.log("error", nicknameHasError.value);
 };
 
 const registerUser = () => {

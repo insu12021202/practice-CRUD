@@ -7,6 +7,7 @@
     >
       TOP
     </button>
+    <div v-if="error">{{ error }}</div>
     <RotateLoader v-if="!data" :color="loadingColor"></RotateLoader>
     <table v-else class="board_table">
       <colgroup>
@@ -16,17 +17,22 @@
       </colgroup>
       <th>No</th>
       <th>제목</th>
-      <th>작성자</th>
-
+      <th>앨범ID</th>
       <tr v-for="item in data" v-bind:key="item">
         <td class="board_num">
-          <router-link :to="`/board/${item.id}`">{{ item.id }}</router-link>
+          <router-link :to="`/board-album/${item.id}`">{{
+            item.id
+          }}</router-link>
         </td>
         <td>
-          <router-link :to="`/board/${item.id}`">{{ item.title }}</router-link>
+          <router-link :to="`/board-album/${item.id}`">{{
+            item.title
+          }}</router-link>
         </td>
         <td>
-          <router-link :to="`/board/${item.id}`">{{ item.userId }}</router-link>
+          <router-link :to="`/board-album/${item.id}`">{{
+            item.albumId
+          }}</router-link>
         </td>
       </tr>
     </table>
@@ -34,21 +40,19 @@
 </template>
 
 <script setup>
+import fetchingData from "@/composables/fetchingData";
 import RotateLoader from "vue-spinner/src/RotateLoader.vue";
 import { onMounted, ref } from "vue";
-import axios from "axios";
-import scroll_top from "@/composables/scrollControl";
-import fetchingData from "@/composables/fetchingData";
-
+const { data, error, load } = fetchingData(
+  "https://jsonplaceholder.typicode.com/albums/1/photos"
+);
 const isActive = ref(false);
 const loadingColor = "#000000";
-const { data, error, load } = fetchingData(
-  "https://jsonplaceholder.typicode.com/posts"
-);
 
 onMounted(() => {
   load();
 });
+
 window.addEventListener("scroll", () => {
   if (window.scrollY >= 100) {
     isActive.value = true;
@@ -56,6 +60,9 @@ window.addEventListener("scroll", () => {
     isActive.value = false;
   }
 });
+const scroll_top = () => {
+  window.scrollTo(0, 0);
+};
 </script>
 
 <style>

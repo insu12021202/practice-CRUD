@@ -26,6 +26,11 @@ input {
   height: 25px;
   margin-bottom: 5px;
 }
+label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
 button:disabled {
   background-color: rgb(211, 211, 211);
   color: white;

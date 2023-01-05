@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { nav_user, nav_not_logined } from "@/const/nav_menu";
+import { nav_user, nav_not_logined } from "@/common/nav_menu";
 import router from "@/router";
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";

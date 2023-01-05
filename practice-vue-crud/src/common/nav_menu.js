@@ -8,6 +8,10 @@ const nav_user = [
     url: "/board",
   },
   {
+    name: "앨범",
+    url: "/board-album",
+  },
+  {
     name: "마이페이지",
     url: "/mypage",
   },

@@ -2,7 +2,7 @@
   <div class="my_page_main">
     <div class="my_page_container">
       <div class="my_page_content">
-        <span class="my_page_main_text">안녕하세요 여인수님</span>
+        <span class="my_page_main_text">안녕하세요 {{ nickname }}님</span>
 
         <button
           class="my_page_info_view_btn"
@@ -33,7 +33,9 @@
             <span><strong>아이디:</strong> {{ email }}</span>
           </div>
           <div class="my_page_btn_wrapper">
-            <button class="my_page_modify_btn">정보 수정하기</button>
+            <button class="my_page_modify_btn" @click="openModifyForm">
+              정보 수정하기
+            </button>
             <button class="my_page_modify_btn" @click="togglePopUp">
               닫기
             </button>
@@ -62,11 +64,17 @@ const storePassword = store.state.password;
 const checkPassword = () => {
   if (storePassword === password.value) {
     isAuthorized.value = true;
+  } else {
+    console.log(storePassword, password.value);
   }
 };
 
 const togglePopUp = () => {
   isOpened.value = !isOpened.value;
+};
+
+const openModifyForm = () => {
+  router.push("/mypage/modify-info");
 };
 </script>
 
@@ -160,7 +168,8 @@ const togglePopUp = () => {
   animation: slideIn 1s;
   margin-top: -30px;
 }
-.checkPasswordWrapper {
+.checkPasswordWrapper,
+.modifyInfoWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -169,7 +178,8 @@ const togglePopUp = () => {
   left: 50%;
   margin-left: -150px;
 }
-.checkPasswordInput {
+.checkPasswordInput,
+.changeInput {
   width: 200px;
   height: 30px;
   padding-left: 10px;

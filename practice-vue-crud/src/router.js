@@ -7,6 +7,7 @@ import AlbumBoard from "./components/user/AlbumBoard.vue";
 import BoardArticle from "./components/user/BoardArticle.vue";
 import AlbumBoardArticle from "./components/user/AlbumBoardArticle.vue";
 import MyPage from "./components/user/MyPage.vue";
+import MyPageModifyInfo from "./components/user/MyPageModifyInfo.vue";
 const routes = [
   { path: "/", name: "Home", component: Home },
   { path: "/login", name: "LogIn", component: Login },
@@ -20,6 +21,11 @@ const routes = [
     component: AlbumBoardArticle,
   },
   { path: "/mypage", name: "Mypage", component: MyPage },
+  {
+    path: "/mypage/modify-info",
+    name: "MyPageModifyInfo",
+    component: MyPageModifyInfo,
+  },
 ];
 
 const router = createRouter({
